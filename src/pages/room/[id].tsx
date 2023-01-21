@@ -1,9 +1,12 @@
 import SectionHeading from "@/components/SectionHeading";
+import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/router";
 
 export default function Room() {
   const router = useRouter()
   const { id } = router.query
+
+  const { Image } = useQRCode()
 
   return (
     <main className="container mx-auto">
@@ -25,7 +28,17 @@ export default function Room() {
           </div>
         </div>
         <h2 className="text-lg font-medium">QR-код</h2>
-        
+        <Image
+          alt="qr"
+          text="abc"
+          options={{
+            type: 'image/jpeg',
+            quality: 1,
+            level: 'L',
+            margin: 3,
+            width: 200,
+          }}
+        />
       </div>
     </main>
 
