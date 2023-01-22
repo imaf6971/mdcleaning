@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react"
+import TimeInput from "./TimeInput"
 
 // TODO: add validation, semantic HTML and server handling
 export default function AddCleaningForm() {
@@ -17,11 +18,13 @@ export default function AddCleaningForm() {
     <div className="p-2 flex flex-col gap-2">
       <h2 className="text-lg font-medium mb-2">Назначить уборку</h2>
       <div className="flex justify-between">
-        <div className="basis-1/2 flex justify-around">
-          <span>C:</span><input type="time" value={from} onChange={handleFromTimeInputChange} />
+        <div className="basis-1/2 flex justify-around items-center">
+          <span>C:</span>
+          <TimeInput value={from} onChange={handleFromTimeInputChange} />
         </div>
-        <div className="basis-1/2 flex justify-around">
-          <span>По:</span><input type="time" value={to} onChange={handleToTimeInputChange} />
+        <div className="basis-1/2 flex justify-around items-center">
+          <span>По:</span>
+          <TimeInput value={to} onChange={handleToTimeInputChange}/>
         </div>
       </div>
     </div>
