@@ -4,7 +4,7 @@ import Modal from "@/components/Modal";
 import SectionHeading from "@/components/SectionHeading";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Room() {
   const router = useRouter()
@@ -49,7 +49,10 @@ export default function Room() {
           }}
         />
       </div>
-      <Modal isVisible={showAddCleaningModal} onClose={() => setShowAddCleaningModal(false)}>
+      <Modal
+        isVisible={showAddCleaningModal}
+        onClose={() => setShowAddCleaningModal(false)}
+      >
         <AddCleaningForm />
       </Modal>
     </main>
