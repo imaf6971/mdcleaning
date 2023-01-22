@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, MouseEventHandler, MouseEvent, useState } from "react"
+import Button from "./Button"
 import TimeInput from "./TimeInput"
 
 // TODO: add validation, semantic HTML and server handling
@@ -14,6 +15,10 @@ export default function AddCleaningForm() {
     setFrom(e.target.value)
   }
 
+  function onAddButtonClick() {
+    
+  }
+
   return (
     <div className="p-2 flex flex-col gap-2">
       <h2 className="text-lg font-medium mb-2">Назначить уборку</h2>
@@ -27,6 +32,7 @@ export default function AddCleaningForm() {
           <TimeInput value={to} onChange={handleToTimeInputChange}/>
         </div>
       </div>
+      <Button onClick={onAddButtonClick}>Добавить</Button>
     </div>
   )
 }
