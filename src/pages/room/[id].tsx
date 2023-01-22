@@ -1,6 +1,10 @@
+import AddCleaningForm from "@/components/AddCleaningForm";
+import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 import SectionHeading from "@/components/SectionHeading";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
 
 export default function Room() {
   const router = useRouter()
@@ -8,13 +12,18 @@ export default function Room() {
 
   const { Image } = useQRCode()
 
+  const [showAddCleaningModal, setShowAddCleaningModal] = useState(false)
+
   return (
     <main className="container mx-auto">
       {id !== undefined
         ? <SectionHeading heading={`Комната ${id}`} />
         : <SectionHeading heading="Комната" />}
       <div className="flex flex-col gap-2 m-4 justify-center">
-        <h2 className="text-lg font-medium">График уборки</h2>
+        <div className="flex justify-between">
+          <h2 className="text-lg font-medium">График уборки</h2>
+          <Button onClick={() => setShowAddCleaningModal(true)}>Добавить</Button>
+        </div>
         <div className="flex flex-col border rounded-md divide-y">
           <div className="flex justify-between items-center p-3 hover:shadow transition-shadow">
             <div className="basis-1/6">1.</div>
@@ -40,6 +49,9 @@ export default function Room() {
           }}
         />
       </div>
+      <Modal isVisible={showAddCleaningModal} onClose={() => setShowAddCleaningModal(false)}>
+        <AddCleaningForm />
+      </Modal>
     </main>
 
   )
