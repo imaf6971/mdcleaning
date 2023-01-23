@@ -25,7 +25,8 @@ export default function AddCleaningModal({ roomId, isVisible, onClose }: AddClea
   }
 
   function onAddButtonClick() {
-    addCleaning.mutate({ roomId, from, to })
+    addCleaning.mutateAsync({ roomId, from, to })
+      .then(onClose)
   }
 
   return (

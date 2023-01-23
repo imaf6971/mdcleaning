@@ -33,10 +33,17 @@ export default function Room(
 ) {
   const { id } = props
   const room = trpc.rooms.byId.useQuery(id);
+  const deleteCleaning = trpc.cleanings.deleteById.useMutation();
 
   const { Image } = useQRCode()
 
   const [showAddCleaningModal, setShowAddCleaningModal] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+
+  function handleCleaningDelete(id: number) {
+    deleteCleaning.mutateAsync(id)
+      .then(() => room.refetch());
+  }
 
   return (
     <main className="container mx-auto">
@@ -46,7 +53,12 @@ export default function Room(
       <div className="flex flex-col gap-2 m-4 justify-center">
         <div className="flex justify-between">
           <h2 className="text-lg font-medium">График уборки</h2>
-          <Button onClick={() => setShowAddCleaningModal(true)}>Добавить</Button>
+          <div className="flex gap-2">
+            {isEditing
+              ? <Button onClick={() => setIsEditing(false)}>Отмена</Button>
+              : <Button onClick={() => setIsEditing(true)}>Изменить</Button>}
+            <Button onClick={() => setShowAddCleaningModal(true)}>Добавить</Button>
+          </div>
         </div>
         <div className="flex flex-col border rounded-md divide-y">
           {room.data!.cleanings.map((cleaning, idx) =>
@@ -54,6 +66,7 @@ export default function Room(
               <div className="basis-1/6">{idx + 1}.</div>
               <div className="basis-2/6">{cleaning.from} - {cleaning.to}</div>
               <div className="basis-3/6">Фамилия Имя</div>
+              {isEditing && <Button onClick={() => handleCleaningDelete(cleaning.id)}>X</Button>}
             </div>
           )}
         </div>
