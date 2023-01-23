@@ -11,5 +11,15 @@ datasource db {
 }
 
 model Room {
-  id Int @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
+  title     String
+  cleanings Cleaning[]
+}
+
+model Cleaning {
+  id     Int    @id @default(autoincrement())
+  room   Room   @relation(fields: [roomId], references: [id])
+  roomId Int
+  from   String // @db.Time for MySQL
+  to     String // @db.Time for MySQL
 }
