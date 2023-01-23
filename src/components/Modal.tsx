@@ -1,4 +1,12 @@
-export default function Modal({ isVisible, onClose, children }: { isVisible: boolean, onClose: () => void, children: React.ReactNode }) {
+import { ReactNode } from "react";
+
+export type ModalProps = {
+  isVisible: boolean;
+  onClose: () => void;
+  children: ReactNode;
+};
+
+export default function Modal({ isVisible, onClose, children }: ModalProps) {
   if (!isVisible) {
     return null;
   }
