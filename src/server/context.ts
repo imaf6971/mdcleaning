@@ -1,8 +1,7 @@
-import { inferAsyncReturnType } from "@trpc/server"
-import { CreateNextContextOptions } from "@trpc/server/adapters/next"
-import { prisma } from "./db"
+import { inferAsyncReturnType } from "@trpc/server";
+import { prisma } from "./db";
 
-export async function createContext(opts: CreateNextContextOptions) {
+export function createContext() {
   return {
     prisma
   }
