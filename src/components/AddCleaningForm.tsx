@@ -1,11 +1,20 @@
-import { ChangeEvent, MouseEventHandler, MouseEvent, useState } from "react"
+import { trpc } from "@/utils/trpc"
+import { ChangeEvent, useState } from "react"
 import Button from "./Button"
+import Modal from "./Modal"
 import TimeInput from "./TimeInput"
 
-// TODO: add validation, semantic HTML and server handling
-export default function AddCleaningForm() {
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+type AddCleaningModalProps = {
+  roomId: number
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+// TODO: add validation and semantic HTML
+export default function AddCleaningModal({ roomId, isVisible, onClose }: AddCleaningModalProps) {
+  const addCleaning = trpc.rooms.addCleaning.useMutation()
+  const [from, setFrom] = useState('11:00')
+  const [to, setTo] = useState('12:00')
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
     setTo(e.target.value)
@@ -16,23 +25,25 @@ export default function AddCleaningForm() {
   }
 
   function onAddButtonClick() {
-    
+    addCleaning.mutate({ roomId, from, to })
   }
 
   return (
-    <div className="p-2 flex flex-col gap-2">
-      <h2 className="text-lg font-medium mb-2">Назначить уборку</h2>
-      <div className="flex justify-between">
-        <div className="basis-1/2 flex justify-around items-center">
-          <span>C:</span>
-          <TimeInput value={from} onChange={handleFromTimeInputChange} />
+    <Modal isVisible={isVisible} onClose={onClose}>
+      <div className="p-2 flex flex-col gap-2">
+        <h2 className="text-lg font-medium mb-2">Назначить уборку</h2>
+        <div className="flex justify-between">
+          <div className="basis-1/2 flex justify-around items-center">
+            <span>C:</span>
+            <TimeInput value={from} onChange={handleFromTimeInputChange} />
+          </div>
+          <div className="basis-1/2 flex justify-around items-center">
+            <span>По:</span>
+            <TimeInput value={to} onChange={handleToTimeInputChange} />
+          </div>
         </div>
-        <div className="basis-1/2 flex justify-around items-center">
-          <span>По:</span>
-          <TimeInput value={to} onChange={handleToTimeInputChange}/>
-        </div>
+        <Button onClick={onAddButtonClick}>Добавить</Button>
       </div>
-      <Button onClick={onAddButtonClick}>Добавить</Button>
-    </div>
+    </Modal>
   )
 }
