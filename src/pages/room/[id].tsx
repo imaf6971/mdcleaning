@@ -10,6 +10,8 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 
+import { ArrowLeftIcon } from '@heroicons/react/24/solid'
+import Link from "next/link";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>,
@@ -41,7 +43,7 @@ export default function Room(
     <main className="container mx-auto">
       {room.isLoading
         ? <SectionHeading heading="Комната..." />
-        : <SectionHeading heading={room.data!.title} />}
+        : <RoomHeading title={room.data!.title} />}
       <div className="flex flex-col gap-2 m-4 justify-center md:w-2/3 md:mx-auto">
         <CleaningTable roomId={id} cleanings={room.data!.cleanings} />
         <h2 className="text-lg font-medium">QR-код</h2>
@@ -58,6 +60,19 @@ export default function Room(
         />
       </div>
     </main>
+  )
+}
+
+function RoomHeading({ title }: {title: string}) {
+  return (
+    <div className="py-3 border-b">
+      <div className="md:w-2/3 mx-auto">
+      <Link className="flex items-center gap-2" href='/'>
+        <ArrowLeftIcon className="w-5 h-5"/>
+        <h1 className="text-2xl font-semibold">{title}</h1>
+      </Link>
+      </div>
+    </div>
   )
 }
 
