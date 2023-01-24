@@ -1,30 +1,24 @@
 import AddCleaningModal from "@/components/AddCleaningForm";
 import Button from "@/components/Button";
 import SectionHeading from "@/components/SectionHeading";
-import { createContext } from "@/server/context";
-import { appRouter } from "@/server/routers/_app";
 import { trpc } from "@/utils/trpc";
 import { Cleaning } from "@prisma/client";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { ssg } from "@/utils/ssg";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>
 ) {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: createContext(),
-    // transformer: superjson, // optional - adds superjson serialization
-  });
+  const ssTrpc = ssg();
   const id = parseInt(context.params?.id as string);
-  await ssg.rooms.byId.prefetch(id);
+  await ssTrpc.rooms.byId.prefetch(id);
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      trpcState: ssTrpc.dehydrate(),
       id,
     },
   };

@@ -1,21 +1,15 @@
 import ListItem from "@/components/ListItem";
 import SectionHeading from "@/components/SectionHeading";
-import { createContext } from "@/server/context";
-import { appRouter } from "@/server/routers/_app";
-import { trpc } from "@/utils/trpc";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { ssg } from "@/utils/ssg";
+import {  trpc } from "@/utils/trpc";
 import Link from "next/link";
 
 export async function getServerSideProps() {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: createContext(),
-    // transformer: superjson, // optional - adds superjson serialization
-  });
-  await ssg.rooms.list.prefetch();
+  const ssTrpc = ssg()
+  await ssTrpc.rooms.list.prefetch();
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      trpcState: ssTrpc.dehydrate(),
     },
   };
 }

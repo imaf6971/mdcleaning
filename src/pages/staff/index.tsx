@@ -1,8 +1,18 @@
 import ListItem from "@/components/ListItem";
 import SectionHeading from "@/components/SectionHeading";
+import { ssg } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
-import Head from "next/head";
 import Link from "next/link";
+
+export async function getServerSideProps() {
+  const ssTrpc = ssg();
+  await ssTrpc.staff.list.prefetch();
+  return {
+    props: {
+      trpcState: ssTrpc.dehydrate(),
+    },
+  };
+}
 
 export default function StaffIndex() {
   const staff = trpc.staff.list.useQuery();
@@ -18,7 +28,9 @@ export default function StaffIndex() {
               href={`/staff/${staff.id}`}
               className="min-w-full"
             >
-              <ListItem>{staff.firstName} {staff.lastName}</ListItem>
+              <ListItem>
+                {staff.firstName} {staff.lastName}
+              </ListItem>
             </Link>
           ))}
         </div>
