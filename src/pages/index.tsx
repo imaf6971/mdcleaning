@@ -26,12 +26,14 @@ export default function Home() {
   return (
     <main className="container mx-auto">
       <SectionHeading heading="Комнаты" />
-      <div className="flex flex-col gap-2 m-4 justify-center items-center">
-        {rooms.data?.map((room) => (
-          <Link key={room.id} href={`/room/${room.id}`} className="w-full">
-            <ListItem>{room.title}</ListItem>
-          </Link>
-        ))}
+      <div className="md:w-2/3 mx-auto">
+        <div className="flex flex-col gap-2 m-4 justify-center items-center">
+          {rooms.data?.map((room) => (
+            <Link key={room.id} href={`/room/${room.id}`} className="min-w-full">
+              <ListItem>{room.title}</ListItem>
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );

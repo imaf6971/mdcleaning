@@ -66,14 +66,14 @@ export default function Room(
 
 function RoomHeading({ title }: { title: string }) {
   return (
-    <div className="py-3 border-b">
+    <header className="py-3 border-b">
       <div className="md:w-2/3 mx-auto">
         <Link className="flex items-center gap-2" href="/">
           <ArrowLeftIcon className="w-5 h-5" />
           <h1 className="text-2xl font-semibold">{title}</h1>
         </Link>
       </div>
-    </div>
+    </header>
   );
 }
 

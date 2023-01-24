@@ -23,3 +23,10 @@ model Cleaning {
   from   String // @db.Time for MySQL
   to     String // @db.Time for MySQL
 }
+
+model Staff {
+  id         Int    @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  patronymic String
+}
