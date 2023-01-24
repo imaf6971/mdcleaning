@@ -15,7 +15,7 @@ export async function getServerSideProps(
 ) {
   const ssTrpc = ssg();
   const id = parseInt(context.params?.id as string);
-  await ssTrpc.rooms.byId.prefetch(id);
+  const room = await ssTrpc.rooms.byId.prefetch(id);
   return {
     props: {
       trpcState: ssTrpc.dehydrate(),
@@ -40,7 +40,7 @@ export default function Room(
         <RoomHeading title={room.data!.title} />
       )}
       <div className="flex flex-col gap-2 m-4 justify-center md:w-2/3 md:mx-auto">
-        <CleaningTable roomId={id} cleanings={room.data!.cleanings} />
+        <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
         <h2 className="text-lg font-medium">QR-код</h2>
         <Image
           alt="qr"
@@ -115,7 +115,7 @@ function CleaningTable({
           >
             <div className="basis-1/6">{idx + 1}.</div>
             <div className="basis-2/6">
-              {cleaning.from} - {cleaning.to}
+              {cleaning.from.toLocaleTimeString('ru-RU')} - {cleaning.to.toLocaleTimeString('ru-RU')}
             </div>
             <div className="basis-3/6">Фамилия Имя</div>
             {isEditing && (
