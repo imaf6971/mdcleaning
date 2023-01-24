@@ -42,7 +42,7 @@ export default function Room(
       {room.isLoading
         ? <SectionHeading heading="Комната..." />
         : <SectionHeading heading={room.data!.title} />}
-      <div className="flex flex-col gap-2 m-4 justify-center">
+      <div className="flex flex-col gap-2 m-4 justify-center md:w-2/3 md:mx-auto">
         <CleaningTable roomId={id} cleanings={room.data!.cleanings} />
         <h2 className="text-lg font-medium">QR-код</h2>
         <Image
@@ -57,9 +57,7 @@ export default function Room(
           }}
         />
       </div>
-
     </main>
-
   )
 }
 
