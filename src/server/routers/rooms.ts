@@ -2,19 +2,18 @@ import { z } from "zod";
 import { procedure, router } from "../trpc";
 
 const rooms = router({
-  list: procedure
-    .query(async ({ctx}) => {
-      const rooms = await ctx.prisma.room.findMany({
-        select: {
-          id: true,
-          title: true
-        },
-      })
-      return rooms;
-    }),
+  list: procedure.query(async ({ ctx }) => {
+    const rooms = await ctx.prisma.room.findMany({
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+    return rooms;
+  }),
   byId: procedure
     .input(z.number().int("Room id should be integer"))
-    .query(async ({input, ctx}) => {
+    .query(async ({ input, ctx }) => {
       const room = await ctx.prisma.room.findUniqueOrThrow({
         where: {
           id: input,
@@ -22,26 +21,27 @@ const rooms = router({
         include: {
           cleanings: {
             orderBy: {
-              from: 'asc'
-            }
-          }
+              from: "asc",
+            },
+          },
         },
-        
-      })
-      return room
+      });
+      return room;
     }),
   addCleaning: procedure
-    .input(z.object({
-      roomId: z.number().int(),
-      from: z.string(),
-      to: z.string()
-    }))
-    .mutation(async ({input, ctx}) => {
-      const newCleaning = await ctx.prisma.cleaning.create({
-        data: input
+    .input(
+      z.object({
+        roomId: z.number().int(),
+        from: z.string(),
+        to: z.string(),
       })
-      return newCleaning
-    })
-})
+    )
+    .mutation(async ({ input, ctx }) => {
+      const newCleaning = await ctx.prisma.cleaning.create({
+        data: input,
+      });
+      return newCleaning;
+    }),
+});
 
 export default rooms;

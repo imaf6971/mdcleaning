@@ -3,8 +3,8 @@ import { prisma } from "./db";
 
 export function createContext() {
   return {
-    prisma
-  }
+    prisma,
+  };
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>;
