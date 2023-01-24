@@ -14,6 +14,7 @@ export async function getServerSideProps() {
   };
 }
 
+// TODO: add navigation, login screen and animations
 export default function Home() {
   const rooms = trpc.rooms.list.useQuery();
 
