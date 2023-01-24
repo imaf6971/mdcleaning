@@ -32,8 +32,8 @@ const rooms = router({
     .input(
       z.object({
         roomId: z.number().int(),
-        from: z.string(),
-        to: z.string(),
+        from: z.date(),
+        to: z.date(),
       })
     )
     .mutation(async ({ input, ctx }) => {
