@@ -12,10 +12,15 @@ type AddCleaningModalProps = {
 
 // TODO: add validation and semantic HTML
 export default function AddCleaningModal({ roomId, isVisible, onClose }: AddCleaningModalProps) {
-  const addCleaning = trpc.rooms.addCleaning.useMutation()
+  const utils = trpc.useContext();
+  const addCleaning = trpc.rooms.addCleaning.useMutation({
+    onSuccess: () => {
+      utils.rooms.byId.invalidate(roomId)
+    }
+  })
   const [from, setFrom] = useState('11:00')
   const [to, setTo] = useState('12:00')
-
+  
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
     setTo(e.target.value)
   }
@@ -25,8 +30,8 @@ export default function AddCleaningModal({ roomId, isVisible, onClose }: AddClea
   }
 
   function onAddButtonClick() {
-    addCleaning.mutateAsync({ roomId, from, to })
-      .then(onClose)
+    addCleaning.mutate({ roomId, from, to });
+    onClose();
   }
 
   return (
