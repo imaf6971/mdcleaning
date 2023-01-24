@@ -17,11 +17,11 @@ model Room {
 }
 
 model Cleaning {
-  id     Int    @id @default(autoincrement())
-  room   Room   @relation(fields: [roomId], references: [id])
+  id     Int      @id @default(autoincrement())
+  room   Room     @relation(fields: [roomId], references: [id])
   roomId Int
-  from   String // @db.Time for MySQL
-  to     String // @db.Time for MySQL
+  from   DateTime // @db.Time for MySQL
+  to     DateTime // @db.Time for MySQL
 }
 
 model Staff {
