@@ -1,32 +1,36 @@
-import { trpc } from "@/utils/trpc"
-import { ChangeEvent, useState } from "react"
-import Button from "./Button"
-import Modal from "./Modal"
-import TimeInput from "./TimeInput"
+import { trpc } from "@/utils/trpc";
+import { ChangeEvent, useState } from "react";
+import Button from "./Button";
+import Modal from "./Modal";
+import TimeInput from "./TimeInput";
 
 type AddCleaningModalProps = {
-  roomId: number
+  roomId: number;
   isVisible: boolean;
   onClose: () => void;
-}
+};
 
 // TODO: add validation and semantic HTML
-export default function AddCleaningModal({ roomId, isVisible, onClose }: AddCleaningModalProps) {
+export default function AddCleaningModal({
+  roomId,
+  isVisible,
+  onClose,
+}: AddCleaningModalProps) {
   const utils = trpc.useContext();
   const addCleaning = trpc.rooms.addCleaning.useMutation({
     onSuccess: () => {
-      utils.rooms.byId.invalidate(roomId)
-    }
-  })
-  const [from, setFrom] = useState('11:00')
-  const [to, setTo] = useState('12:00')
-  
+      utils.rooms.byId.invalidate(roomId);
+    },
+  });
+  const [from, setFrom] = useState("11:00");
+  const [to, setTo] = useState("12:00");
+
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setTo(e.target.value)
+    setTo(e.target.value);
   }
 
   function handleFromTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setFrom(e.target.value)
+    setFrom(e.target.value);
   }
 
   function onAddButtonClick() {
@@ -51,5 +55,5 @@ export default function AddCleaningModal({ roomId, isVisible, onClose }: AddClea
         <Button onClick={onAddButtonClick}>Добавить</Button>
       </div>
     </Modal>
-  )
+  );
 }

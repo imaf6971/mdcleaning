@@ -7,10 +7,10 @@ const cleanings = router({
     .mutation(async ({ input, ctx }) => {
       await ctx.prisma.cleaning.delete({
         where: {
-          id: input
-        }
-      })
-    })
-})
+          id: input,
+        },
+      });
+    }),
+});
 
 export default cleanings;

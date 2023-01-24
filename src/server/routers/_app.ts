@@ -4,7 +4,7 @@ import cleanings from "./cleaning";
 
 export const appRouter = router({
   rooms,
-  cleanings
-})
+  cleanings,
+});
 
 export type AppRouter = typeof appRouter;
