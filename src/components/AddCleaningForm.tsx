@@ -11,6 +11,7 @@ type AddCleaningModalProps = {
 };
 
 // TODO: add validation and semantic HTML
+// TODO: add staff like https://tailwindui.com/components/application-ui/forms/select-menus
 export default function AddCleaningModal({
   roomId,
   isVisible,
@@ -22,15 +23,27 @@ export default function AddCleaningModal({
       utils.rooms.byId.invalidate(roomId);
     },
   });
-  const [from, setFrom] = useState("11:00");
-  const [to, setTo] = useState("12:00");
+  const [from, setFrom] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
+  const [to, setTo] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setTo(e.target.value);
+    setTo((prev) => {
+      try {
+        return e.target.valueAsDate!;
+      } catch (error) {
+        return prev;
+      }
+    });
   }
 
   function handleFromTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setFrom(e.target.value);
+    setFrom((prev) => {
+      try {
+        return e.target.valueAsDate!;
+      } catch (error) {
+        return prev;
+      }
+    });
   }
 
   function onAddButtonClick() {
@@ -45,11 +58,17 @@ export default function AddCleaningModal({
         <div className="flex justify-between">
           <div className="basis-1/2 flex justify-around items-center">
             <span>C:</span>
-            <TimeInput value={from} onChange={handleFromTimeInputChange} />
+            <TimeInput
+              value={from.toLocaleTimeString("ru-RU")}
+              onChange={handleFromTimeInputChange}
+            />
           </div>
           <div className="basis-1/2 flex justify-around items-center">
             <span>По:</span>
-            <TimeInput value={to} onChange={handleToTimeInputChange} />
+            <TimeInput
+              value={to.toLocaleTimeString("ru-RU")}
+              onChange={handleToTimeInputChange}
+            />
           </div>
         </div>
         <Button onClick={onAddButtonClick}>Добавить</Button>
