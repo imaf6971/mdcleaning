@@ -8,12 +8,12 @@ import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { ssg } from "@/utils/ssg";
+import { serverSideTRPC } from "@/utils/ssg";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>
 ) {
-  const ssTrpc = ssg();
+  const ssTrpc = serverSideTRPC();
   const id = parseInt(context.params?.id as string);
   const room = await ssTrpc.rooms.byId.prefetch(id);
   return {

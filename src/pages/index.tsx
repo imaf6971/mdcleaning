@@ -1,10 +1,10 @@
 import RoomTable from "@/components/RoomTable";
 import SectionHeading from "@/components/SectionHeading";
-import { ssg } from "@/utils/ssg";
+import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
 
 export async function getServerSideProps() {
-  const ssTrpc = ssg();
+  const ssTrpc = serverSideTRPC();
   await ssTrpc.rooms.list.prefetch();
   return {
     props: {

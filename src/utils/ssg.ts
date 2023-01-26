@@ -3,7 +3,7 @@ import { appRouter } from "@/server/routers/_app";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import superjson from "superjson";
 
-export const ssg = () =>
+export const serverSideTRPC = () =>
   createProxySSGHelpers({
     router: appRouter,
     ctx: createContext(),

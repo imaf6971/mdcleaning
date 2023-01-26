@@ -1,11 +1,11 @@
 import ListItem from "@/components/ListItem";
 import SectionHeading from "@/components/SectionHeading";
-import { ssg } from "@/utils/ssg";
+import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
 import Link from "next/link";
 
 export async function getServerSideProps() {
-  const ssTrpc = ssg();
+  const ssTrpc = serverSideTRPC();
   await ssTrpc.staff.list.prefetch();
   return {
     props: {
