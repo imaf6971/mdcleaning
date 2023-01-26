@@ -20,8 +20,8 @@ export default function StaffIndex() {
   return (
     <main className="container mx-auto">
       <SectionHeading heading="Сотрудники" />
-      <div className="md:w-2/3 mx-auto">
-        <div className="flex flex-col gap-2 m-4 justify-center items-center">
+      <div className="mx-auto md:w-2/3">
+        <div className="m-4 flex flex-col items-center justify-center gap-2">
           {staff.data?.map((staff) => (
             <Link
               key={staff.id}

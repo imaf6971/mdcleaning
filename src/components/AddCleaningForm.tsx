@@ -53,17 +53,17 @@ export default function AddCleaningModal({
 
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="p-2 flex flex-col gap-2">
-        <h2 className="text-lg font-medium mb-2">Назначить уборку</h2>
+      <div className="flex flex-col gap-2 p-2">
+        <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
         <div className="flex justify-between">
-          <div className="basis-1/2 flex justify-around items-center">
+          <div className="flex basis-1/2 items-center justify-around">
             <span>C:</span>
             <TimeInput
               value={from.toLocaleTimeString("ru-RU")}
               onChange={handleFromTimeInputChange}
             />
           </div>
-          <div className="basis-1/2 flex justify-around items-center">
+          <div className="flex basis-1/2 items-center justify-around">
             <span>По:</span>
             <TimeInput
               value={to.toLocaleTimeString("ru-RU")}

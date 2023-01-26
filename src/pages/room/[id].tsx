@@ -39,7 +39,7 @@ export default function Room(
       ) : (
         <RoomHeading title={room.data!.title} />
       )}
-      <div className="flex flex-col gap-2 m-4 justify-center md:w-2/3 md:mx-auto">
+      <div className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
         <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
         <h2 className="text-lg font-medium">QR-код</h2>
         <Image
@@ -60,10 +60,10 @@ export default function Room(
 
 function RoomHeading({ title }: { title: string }) {
   return (
-    <header className="py-3 border-b">
-      <div className="md:w-2/3 mx-auto">
+    <header className="border-b py-3">
+      <div className="mx-auto md:w-2/3">
         <Link className="flex items-center gap-2" href="/">
-          <ArrowLeftIcon className="w-5 h-5" />
+          <ArrowLeftIcon className="h-5 w-5" />
           <h1 className="text-2xl font-semibold">{title}</h1>
         </Link>
       </div>
@@ -107,15 +107,16 @@ function CleaningTable({
           </Button>
         </div>
       </div>
-      <div className="flex flex-col border rounded-md divide-y">
+      <div className="flex flex-col divide-y rounded-md border">
         {cleanings.map((cleaning, idx) => (
           <div
             key={cleaning.id}
-            className="flex justify-between items-center p-3 hover:shadow transition-shadow"
+            className="flex items-center justify-between p-3 transition-shadow hover:shadow"
           >
             <div className="basis-1/6">{idx + 1}.</div>
             <div className="basis-2/6">
-              {cleaning.from.toLocaleTimeString('ru-RU')} - {cleaning.to.toLocaleTimeString('ru-RU')}
+              {cleaning.from.toLocaleTimeString("ru-RU")} -{" "}
+              {cleaning.to.toLocaleTimeString("ru-RU")}
             </div>
             <div className="basis-3/6">Фамилия Имя</div>
             {isEditing && (
