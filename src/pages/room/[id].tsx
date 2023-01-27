@@ -1,4 +1,4 @@
-import AddCleaningModal from "@/components/AddCleaningForm";
+import AddCleaningModal from "@/components/AddCleaningModal";
 import Button from "@/components/Button";
 import SectionHeading from "@/components/SectionHeading";
 import { trpc } from "@/utils/trpc";
