@@ -40,6 +40,7 @@ export default function RoomTable({ rooms }: RoomTableProps) {
     <div className="mx-auto md:w-2/3">
       <BasicTable
         items={roomLinks}
+        isEditing={isEditing}
         onAddClick={handleAddRoomClick}
         onChangeClick={handleEditRoomClick}
       />
