@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 type BasicTableProps = {
   heading?: string;
