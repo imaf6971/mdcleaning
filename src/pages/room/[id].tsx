@@ -1,5 +1,5 @@
 import AddCleaningModal from "@/components/AddCleaningModal";
-import Button from "@/components/ui/Button";
+import Button from "@/ui/Button";
 import SectionHeading from "@/components/SectionHeading";
 import { trpc } from "@/utils/trpc";
 import { Cleaning } from "@prisma/client";

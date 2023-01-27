@@ -1,8 +1,8 @@
 import { trpc } from "@/utils/trpc";
 import { ChangeEvent, useState } from "react";
-import Button from "./ui/Button";
+import Button from "../ui/Button";
 import Modal from "./Modal";
-import TimeInput from "./ui/TimeInput";
+import TimeInput from "../ui/TimeInput";
 
 type AddCleaningModalProps = {
   roomId: number;
