@@ -7,6 +7,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { serverSideTRPC } from "@/utils/ssg";
 
@@ -120,9 +121,12 @@ function CleaningTable({
             </div>
             <div className="basis-3/6">Фамилия Имя</div>
             {isEditing && (
-              <Button onClick={() => handleCleaningDelete(cleaning.id)}>
-                X
-              </Button>
+              <button
+                onClick={() => handleCleaningDelete(cleaning.id)}
+                className="rounded-md border p-1 hover:cursor-pointer"
+              >
+                <TrashIcon className="h-6" />
+              </button>
             )}
           </div>
         ))}
