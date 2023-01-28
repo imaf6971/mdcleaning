@@ -43,7 +43,7 @@ const rooms = router({
       return newCleaning;
     }),
   add: procedure
-    .input(z.object({ title: z.string() }))
+    .input(z.object({ title: z.string().min(1) }))
     .mutation(async ({ input, ctx }) => {
       const newRoom = await ctx.prisma.room.create({
         data: input,
