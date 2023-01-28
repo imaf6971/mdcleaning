@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import BasicTable from "./BasicTable";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import ListItem from "./ListItem";
+import ListItem from "../ui/ListItem";
 import Modal from "../ui/Modal";
 import SubmitInput from "@/ui/SubmitInput";
 

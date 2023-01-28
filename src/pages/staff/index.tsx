@@ -1,5 +1,5 @@
 import BasicTable from "@/components/BasicTable";
-import ListItem from "@/components/ListItem";
+import ListItem from "@/ui/ListItem";
 import SectionHeading from "@/components/SectionHeading";
 import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
