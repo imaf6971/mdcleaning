@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../ui/Button";
 import Modal from "./Modal";
 import TimeInput from "../ui/TimeInput";
+import SubmitInput from "@/ui/SubmitInput";
 
 type AddCleaningModalProps = {
   roomId: number;
@@ -73,11 +74,7 @@ export default function AddCleaningModal({
             onChange={handleToTimeInputChange}
           />
         </div>
-        <input
-          className="rounded-md border p-2 transition-shadow hover:cursor-pointer hover:shadow focus:bg-gray-200 focus:outline-none focus:ring"
-          type="submit"
-          value="Добавить"
-        />
+        <SubmitInput value="Добавить" />
       </form>
     </Modal>
   );

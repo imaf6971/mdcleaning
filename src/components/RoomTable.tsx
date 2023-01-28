@@ -1,11 +1,12 @@
 import { trpc } from "@/utils/trpc";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import BasicTable from "./BasicTable";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import ListItem from "./ListItem";
 import Modal from "./Modal";
+import SubmitInput from "@/ui/SubmitInput";
 
 type Room = {
   id: number;
@@ -37,15 +38,16 @@ export default function RoomTable({ rooms }: RoomTableProps) {
   }
 
   return (
-    <div className="mx-auto md:w-2/3">
+    <>
       <BasicTable
+        heading="Комнаты"
         items={roomLinks}
         isEditing={isEditing}
         onAddClick={handleAddRoomClick}
         onChangeClick={handleEditRoomClick}
       />
       <AddRoomModal isVisible={isAdding} onClose={() => setIsAdding(false)} />
-    </div>
+    </>
   );
 }
 
@@ -63,16 +65,17 @@ function AddRoomModal({ isVisible, onClose }: AddRoomModalProps) {
   });
   const [roomTitle, setRoomTitle] = useState("");
 
-  function onAddButtonClick() {
+  function handleAddRoomSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     addRooms.mutate({ title: roomTitle });
     onClose();
   }
 
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="flex flex-col gap-2 p-2">
+      <form onSubmit={handleAddRoomSubmit} className="flex flex-col gap-2 p-2">
         <h2 className="mb-2 text-lg font-medium">Добавить Комнату</h2>
-        <div className="flex justify-between">
+        <div>
           <Input
             id="roomTitle"
             value={roomTitle}
@@ -80,8 +83,8 @@ function AddRoomModal({ isVisible, onClose }: AddRoomModalProps) {
             onChange={(e) => setRoomTitle(e.target.value)}
           />
         </div>
-        <Button onClick={onAddButtonClick}>Добавить</Button>
-      </div>
+        <SubmitInput value="Добавить" />
+      </form>
     </Modal>
   );
 }
