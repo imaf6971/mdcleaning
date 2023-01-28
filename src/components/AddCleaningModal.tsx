@@ -29,7 +29,7 @@ export default function AddCleaningModal({
   const [cleanerId, setCleanerId] = useState(0);
 
   function handleCleanerIdSelect(e: ChangeEvent<HTMLSelectElement>) {
-    setCleanerId(parseInt(e.target.value))
+    setCleanerId(parseInt(e.target.value));
   }
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -79,13 +79,28 @@ export default function AddCleaningModal({
             onChange={handleToTimeInputChange}
           />
         </div>
-        <select value={cleanerId} onChange={handleCleanerIdSelect} name="staffId" id="staffIdSelect">
-          {cleaners.data?.map((cleaner) => (
-            <option value={cleaner.id} key={cleaner.id}>
-              {`${cleaner.firstName} ${cleaner.lastName}`}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label
+            htmlFor="staffId"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Клинер
+          </label>
+
+          <select
+            className="mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            value={cleanerId}
+            onChange={handleCleanerIdSelect}
+            name="staffId"
+            id="staffIdSelect"
+          >
+            {cleaners.data?.map((cleaner) => (
+              <option value={cleaner.id} key={cleaner.id}>
+                {`${cleaner.firstName} ${cleaner.lastName}`}
+              </option>
+            ))}
+          </select>
+        </div>
         <SubmitInput value="Добавить" />
       </form>
     </Modal>
