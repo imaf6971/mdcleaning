@@ -5,7 +5,7 @@ import BasicTable from "./BasicTable";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import ListItem from "./ListItem";
-import Modal from "./Modal";
+import Modal from "../ui/Modal";
 import SubmitInput from "@/ui/SubmitInput";
 
 type Room = {
