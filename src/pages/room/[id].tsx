@@ -34,13 +34,13 @@ export default function Room(
   const { Image } = useQRCode();
 
   return (
-    <main className="container mx-auto">
+    <div className="container mx-auto">
       {room.isLoading ? (
         <SectionHeading heading="Комната..." />
       ) : (
         <RoomHeading title={room.data!.title} />
       )}
-      <div className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
+      <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
         <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
         <h2 className="text-lg font-medium">QR-код</h2>
         <Image
@@ -54,8 +54,8 @@ export default function Room(
             width: 200,
           }}
         />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 
