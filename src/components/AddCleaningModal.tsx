@@ -1,5 +1,5 @@
 import { trpc } from "@/utils/trpc";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../ui/Button";
 import Modal from "./Modal";
 import TimeInput from "../ui/TimeInput";
@@ -46,33 +46,39 @@ export default function AddCleaningModal({
     });
   }
 
-  function onAddButtonClick() {
+  function handleAddCleaningSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     addCleaning.mutate({ roomId, from, to });
     onClose();
   }
 
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="flex flex-col gap-2 p-2">
+      <form
+        onSubmit={handleAddCleaningSubmit}
+        className="flex flex-col gap-2 p-2"
+      >
         <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
         <div className="flex justify-between">
-          <div className="flex basis-1/2 items-center justify-around">
-            <span>C:</span>
-            <TimeInput
-              value={from.toLocaleTimeString("ru-RU")}
-              onChange={handleFromTimeInputChange}
-            />
-          </div>
-          <div className="flex basis-1/2 items-center justify-around">
-            <span>По:</span>
-            <TimeInput
-              value={to.toLocaleTimeString("ru-RU")}
-              onChange={handleToTimeInputChange}
-            />
-          </div>
+          <TimeInput
+            label="C:"
+            id="fromCleaning"
+            value={from.toLocaleTimeString("ru-RU")}
+            onChange={handleFromTimeInputChange}
+          />
+          <TimeInput
+            label="По:"
+            id="toCleaning"
+            value={to.toLocaleTimeString("ru-RU")}
+            onChange={handleToTimeInputChange}
+          />
         </div>
-        <Button onClick={onAddButtonClick}>Добавить</Button>
-      </div>
+        <input
+          className="rounded-md border p-2 transition-shadow hover:cursor-pointer hover:shadow focus:bg-gray-200 focus:outline-none focus:ring"
+          type="submit"
+          value="Добавить"
+        />
+      </form>
     </Modal>
   );
 }
