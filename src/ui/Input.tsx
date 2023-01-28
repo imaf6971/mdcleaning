@@ -9,7 +9,7 @@ type InputProps = {
 
 export default function Input({ value, onChange, label, id }: InputProps) {
   return (
-    <div>
+    <div className="flex items-center justify-between text-center">
       <label
         className="mb-2 block font-medium text-gray-900 dark:text-white"
         htmlFor={id}
