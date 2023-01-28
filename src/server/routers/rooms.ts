@@ -20,6 +20,9 @@ const rooms = router({
         },
         include: {
           cleanings: {
+            include: {
+              cleaner: true
+            },
             orderBy: {
               from: "asc",
             },
@@ -39,7 +42,12 @@ const rooms = router({
     )
     .mutation(async ({ input, ctx }) => {
       const newCleaning = await ctx.prisma.cleaning.create({
-        data: input,
+        data: {
+          from: input.from,
+          to: input.to,
+          roomId: input.roomId,
+          staffId: input.cleanerId
+        },
       });
       return newCleaning;
     }),

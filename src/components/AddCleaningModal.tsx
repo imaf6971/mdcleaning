@@ -29,7 +29,8 @@ export default function AddCleaningModal({
   const [cleanerId, setCleanerId] = useState(0);
 
   function handleCleanerIdSelect(e: ChangeEvent<HTMLSelectElement>) {
-    setCleanerId(parseInt(e.target.value));
+    const cleaner = parseInt(e.target.value);
+    setCleanerId(cleaner);
   }
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -86,7 +87,6 @@ export default function AddCleaningModal({
           >
             Клинер
           </label>
-
           <select
             className="mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             value={cleanerId}

@@ -10,6 +10,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { serverSideTRPC } from "@/utils/ssg";
+import BasicTable from "@/components/BasicTable";
+import CleaningTable from "@/components/CleaningTable";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>
@@ -72,72 +74,3 @@ function RoomHeading({ title }: { title: string }) {
   );
 }
 
-function CleaningTable({
-  roomId,
-  cleanings,
-}: {
-  roomId: number;
-  cleanings: Cleaning[];
-}) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [showAddCleaningModal, setShowAddCleaningModal] = useState(false);
-
-  const utils = trpc.useContext();
-  const deleteCleaning = trpc.cleanings.deleteById.useMutation({
-    onSuccess: () => {
-      utils.rooms.byId.invalidate(roomId);
-    },
-  });
-
-  function handleCleaningDelete(id: number) {
-    deleteCleaning.mutate(id);
-  }
-
-  return (
-    <>
-      <div className="flex justify-between">
-        <h2 className="text-lg font-medium">График уборки</h2>
-        <div className="flex gap-2">
-          {isEditing ? (
-            <Button onClick={() => setIsEditing(false)}>Отмена</Button>
-          ) : (
-            <Button onClick={() => setIsEditing(true)}>Изменить</Button>
-          )}
-          <Button onClick={() => setShowAddCleaningModal(true)}>
-            Добавить
-          </Button>
-        </div>
-      </div>
-      <div className="flex flex-col divide-y rounded-md border">
-        {cleanings.map((cleaning, idx) => (
-          <div
-            key={cleaning.id}
-            className="flex items-center justify-between p-3 transition-shadow hover:shadow"
-          >
-            <div className="basis-1/6">{idx + 1}.</div>
-            <div className="basis-2/6">
-              {cleaning.from.toLocaleTimeString("ru-RU")} -{" "}
-              {cleaning.to.toLocaleTimeString("ru-RU")}
-            </div>
-            <div className="basis-3/6">Фамилия Имя</div>
-            {isEditing && (
-              <button
-                onClick={() => handleCleaningDelete(cleaning.id)}
-                className="rounded-md border p-1 hover:cursor-pointer"
-              >
-                <TrashIcon className="h-6" />
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-      <AddCleaningModal
-        roomId={roomId}
-        isVisible={showAddCleaningModal}
-        onClose={() => {
-          setShowAddCleaningModal(false);
-        }}
-      />
-    </>
-  );
-}
