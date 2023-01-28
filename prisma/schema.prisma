@@ -17,16 +17,19 @@ model Room {
 }
 
 model Cleaning {
-  id     Int      @id @default(autoincrement())
-  room   Room     @relation(fields: [roomId], references: [id])
-  roomId Int
-  from   DateTime // @db.Time for MySQL
-  to     DateTime // @db.Time for MySQL
+  id      Int      @id @default(autoincrement())
+  room    Room     @relation(fields: [roomId], references: [id])
+  roomId  Int
+  from    DateTime // @db.Time for MySQL
+  to      DateTime // @db.Time for MySQL
+  cleaner Staff    @relation(fields: [staffId], references: [id])
+  staffId Int
 }
 
 model Staff {
-  id         Int    @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   firstName  String
   lastName   String
   patronymic String
+  Cleaning   Cleaning[]
 }

@@ -1,8 +1,7 @@
 import { trpc } from "@/utils/trpc";
 import { ChangeEvent, FormEvent, useState } from "react";
-import Button from "../ui/Button";
 import Modal from "./Modal";
-import TimeInput from "../ui/TimeInput";
+import TimeInput from "@/ui/TimeInput";
 import SubmitInput from "@/ui/SubmitInput";
 
 type AddCleaningModalProps = {
@@ -11,7 +10,7 @@ type AddCleaningModalProps = {
   onClose: () => void;
 };
 
-// TODO: add validation and semantic HTML
+// TODO: add validation
 // TODO: add staff like https://tailwindui.com/components/application-ui/forms/select-menus
 export default function AddCleaningModal({
   roomId,
@@ -24,8 +23,14 @@ export default function AddCleaningModal({
       utils.rooms.byId.invalidate(roomId);
     },
   });
+  const cleaners = trpc.staff.list.useQuery();
   const [from, setFrom] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
   const [to, setTo] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
+  const [cleanerId, setCleanerId] = useState(0);
+
+  function handleCleanerIdSelect(e: ChangeEvent<HTMLSelectElement>) {
+    setCleanerId(parseInt(e.target.value))
+  }
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
     setTo((prev) => {
@@ -49,7 +54,7 @@ export default function AddCleaningModal({
 
   function handleAddCleaningSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    addCleaning.mutate({ roomId, from, to });
+    addCleaning.mutate({ roomId, from, to, cleanerId });
     onClose();
   }
 
@@ -74,6 +79,13 @@ export default function AddCleaningModal({
             onChange={handleToTimeInputChange}
           />
         </div>
+        <select value={cleanerId} onChange={handleCleanerIdSelect} name="staffId" id="staffIdSelect">
+          {cleaners.data?.map((cleaner) => (
+            <option value={cleaner.id} key={cleaner.id}>
+              {`${cleaner.firstName} ${cleaner.lastName}`}
+            </option>
+          ))}
+        </select>
         <SubmitInput value="Добавить" />
       </form>
     </Modal>
