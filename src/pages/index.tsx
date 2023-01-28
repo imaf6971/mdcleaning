@@ -2,6 +2,7 @@ import RoomTable from "@/components/RoomTable";
 import SectionHeading from "@/components/SectionHeading";
 import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
+import Head from "next/head";
 
 export async function getServerSideProps() {
   const ssTrpc = serverSideTRPC();
@@ -18,9 +19,19 @@ export default function Home() {
   const rooms = trpc.rooms.list.useQuery();
 
   return (
-    <main className="container mx-auto">
-      <SectionHeading heading="Комнаты" />
-      {rooms.isSuccess && <RoomTable rooms={rooms.data} />}
-    </main>
+    <>
+      <Head>
+        <title>Комнаты</title>
+      </Head>
+      <div className="container mx-auto">
+        <SectionHeading heading="Комнаты" />
+        {rooms.isSuccess && (
+          <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
+            <RoomTable rooms={rooms.data} />
+          </main>
+        )}
+        {rooms.isLoading && <div>Loading...</div>}
+      </div>
+    </>
   );
 }
