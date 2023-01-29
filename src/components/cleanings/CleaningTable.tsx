@@ -3,7 +3,7 @@ import { trpc } from "@/utils/trpc";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import AddCleaningModal from "./AddCleaningModal";
-import BasicTable from "./BasicTable";
+import BasicTable from "../BasicTable";
 
 type Staff = {
   firstName: string;
