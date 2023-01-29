@@ -12,6 +12,7 @@ import Link from "next/link";
 import { serverSideTRPC } from "@/utils/ssg";
 import BasicTable from "@/components/BasicTable";
 import CleaningTable from "@/components/CleaningTable";
+import Head from "next/head";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>
@@ -36,6 +37,10 @@ export default function Room(
   const { Image } = useQRCode();
 
   return (
+    <>
+    <Head>
+      <title>{room.data?.title ?? "Комната..."}</title>
+    </Head>
     <div className="container mx-auto">
       {room.isLoading ? (
         <SectionHeading heading="Комната..." />
@@ -58,6 +63,7 @@ export default function Room(
         />
       </main>
     </div>
+    </>
   );
 }
 
