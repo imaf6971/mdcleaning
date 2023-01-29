@@ -1,17 +1,11 @@
-import AddCleaningModal from "@/components/AddCleaningModal";
-import Button from "@/ui/Button";
-import SectionHeading from "@/components/SectionHeading";
+import SectionHeading from "@/ui/SectionHeading";
 import { trpc } from "@/utils/trpc";
-import { Cleaning } from "@prisma/client";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useQRCode } from "next-qrcode";
-import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { serverSideTRPC } from "@/utils/ssg";
-import BasicTable from "@/components/BasicTable";
-import CleaningTable from "@/components/CleaningTable";
+import CleaningTable from "@/components/cleanings/CleaningTable";
 import Head from "next/head";
 
 export async function getServerSideProps(
@@ -38,31 +32,31 @@ export default function Room(
 
   return (
     <>
-    <Head>
-      <title>{room.data?.title ?? "Комната..."}</title>
-    </Head>
-    <div className="container mx-auto">
-      {room.isLoading ? (
-        <SectionHeading heading="Комната..." />
-      ) : (
-        <RoomHeading title={room.data!.title} />
-      )}
-      <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
-        <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
-        <h2 className="text-lg font-medium">QR-код</h2>
-        <Image
-          alt="qr"
-          text="abc"
-          options={{
-            type: "image/jpeg",
-            quality: 1,
-            level: "L",
-            margin: 3,
-            width: 200,
-          }}
-        />
-      </main>
-    </div>
+      <Head>
+        <title>{room.data?.title ?? "Комната..."}</title>
+      </Head>
+      <div className="container mx-auto">
+        {room.isLoading ? (
+          <SectionHeading heading="Комната..." />
+        ) : (
+          <RoomHeading title={room.data!.title} />
+        )}
+        <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
+          <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
+          <h2 className="text-lg font-medium">QR-код</h2>
+          <Image
+            alt="qr"
+            text="abc"
+            options={{
+              type: "image/jpeg",
+              quality: 1,
+              level: "L",
+              margin: 3,
+              width: 200,
+            }}
+          />
+        </main>
+      </div>
     </>
   );
 }
@@ -79,4 +73,3 @@ function RoomHeading({ title }: { title: string }) {
     </header>
   );
 }
-
