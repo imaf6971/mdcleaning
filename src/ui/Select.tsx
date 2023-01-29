@@ -4,7 +4,7 @@ type SelectProps = {
   id: string;
   name: string;
   label: string;
-  options: () => JSX.Element[];
+  options: () => JSX.Element[] | undefined;
   value: string | number | readonly string[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
 };
@@ -15,18 +15,18 @@ export default function Select({
   options,
   value,
   onChange,
-  name
+  name,
 }: SelectProps) {
   return (
     <div>
       <label
         htmlFor={id}
-        className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+        className="mb-2 block font-medium text-gray-900 dark:text-white"
       >
         {label}
       </label>
       <select
-        className="mb-6 block w-full btn-like"
+        className="btn-like mb-6 block w-full bg-white"
         value={value}
         onChange={onChange}
         name={name}
