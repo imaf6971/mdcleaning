@@ -1,4 +1,4 @@
-import RoomTable from "@/components/RoomTable";
+import RoomTable from "@/components/room/RoomTable";
 import SectionHeading from "@/components/SectionHeading";
 import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
