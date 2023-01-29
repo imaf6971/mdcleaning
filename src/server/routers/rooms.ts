@@ -21,7 +21,7 @@ const rooms = router({
         include: {
           cleanings: {
             include: {
-              cleaner: true
+              cleaner: true,
             },
             orderBy: {
               from: "asc",
@@ -46,7 +46,7 @@ const rooms = router({
           from: input.from,
           to: input.to,
           roomId: input.roomId,
-          staffId: input.cleanerId
+          staffId: input.cleanerId,
         },
       });
       return newCleaning;
@@ -58,6 +58,15 @@ const rooms = router({
         data: input,
       });
       return newRoom;
+    }),
+  deleteById: procedure
+    .input(z.number().int())
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.room.delete({
+        where: {
+          id: input
+        }
+      })
     }),
 });
 
