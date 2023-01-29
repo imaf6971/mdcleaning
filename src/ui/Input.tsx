@@ -18,7 +18,7 @@ export default function Input({ value, onChange, label, id }: InputProps) {
       </label>
       <input
         id={id}
-        className="rounded-md border p-2 transition-shadow hover:shadow focus:bg-gray-200 focus:outline-none focus:ring"
+        className="btn-like"
         type="text"
         value={value}
         onChange={onChange}

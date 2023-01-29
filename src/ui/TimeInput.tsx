@@ -23,7 +23,7 @@ export default function TimeInput({
       </label>
       <input
         id={id}
-        className="rounded-md border p-2 transition-shadow hover:shadow focus:bg-gray-200 focus:outline-none focus:ring"
+        className="btn-like"
         type="time"
         value={value}
         onChange={onChange}
