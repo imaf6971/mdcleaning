@@ -1,8 +1,9 @@
 import { trpc } from "@/utils/trpc";
 import { ChangeEvent, FormEvent, useState } from "react";
-import Modal from "../ui/Modal";
+import Modal from "../../ui/Modal";
 import TimeInput from "@/ui/TimeInput";
 import SubmitInput from "@/ui/SubmitInput";
+import Select from "@/ui/Select";
 
 type AddCleaningModalProps = {
   roomId: number;
@@ -11,7 +12,6 @@ type AddCleaningModalProps = {
 };
 
 // TODO: add validation
-// TODO: add staff like https://tailwindui.com/components/application-ui/forms/select-menus
 export default function AddCleaningModal({
   roomId,
   isVisible,
@@ -80,27 +80,20 @@ export default function AddCleaningModal({
             onChange={handleToTimeInputChange}
           />
         </div>
-        <div>
-          <label
-            htmlFor="staffId"
-            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Клинер
-          </label>
-          <select
-            className="mb-6 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-            value={cleanerId}
-            onChange={handleCleanerIdSelect}
-            name="staffId"
-            id="staffIdSelect"
-          >
-            {cleaners.data?.map((cleaner) => (
+        <Select
+          label="Клинер"
+          name="staffId"
+          id="staffIdSelect"
+          value={cleanerId}
+          onChange={handleCleanerIdSelect}
+          options={() =>
+            cleaners.data?.map((cleaner) => (
               <option value={cleaner.id} key={cleaner.id}>
                 {`${cleaner.firstName} ${cleaner.lastName}`}
               </option>
-            ))}
-          </select>
-        </div>
+            ))
+          }
+        />
         <SubmitInput value="Добавить" />
       </form>
     </Modal>
