@@ -19,7 +19,11 @@ export default function Select({ options, value, onChange }: SelectProps) {
   }
 
   function selectOption(option: SelectOption) {
-    onChange(option)
+    onChange(option);
+  }
+
+  function isOptionSelected(option: SelectOption): boolean {
+    return option.value === value?.value;
   }
 
   return (
@@ -31,7 +35,7 @@ export default function Select({ options, value, onChange }: SelectProps) {
       <span className="grow">{value?.label}</span>
       <button
         onClick={(e) => {
-          e.stopPropagation()
+          e.stopPropagation();
           clearOptions();
         }}
         className="cursor-pointer p-0 text-xl hover:text-gray-200 focus:text-gray-200"
@@ -46,11 +50,17 @@ export default function Select({ options, value, onChange }: SelectProps) {
         }`}
       >
         {options.map((option) => (
-          <li onClick={(e) => {
-            e.stopPropagation()
-            selectOption(option)
-            setIsOpen(false)
-          }} key={option.value} className="cursor-pointer py-1 px-2">
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+              selectOption(option);
+              setIsOpen(false);
+            }}
+            key={option.value}
+            className={`cursor-pointer py-1 px-2 hover:bg-gray-200 ${
+              isOptionSelected(option) ? "bg-gray-400 hover:bg-gray-500" : ""
+            }`}
+          >
             {option.label}
           </li>
         ))}
