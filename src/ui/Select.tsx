@@ -42,8 +42,8 @@ export default function Select({ options, value, onChange }: SelectProps) {
       >
         &times;
       </button>
-      <div className="w-[.05em] self-stretch bg-gray-200"></div>
-      <div className="border-[.25em] border-solid border-transparent border-t-gray-200"></div>
+      <div className="w-[.05em] self-stretch bg-gray-200" />
+      <div className="border-[.25em] border-solid border-transparent border-t-gray-200" />
       <ul
         className={`absolute left-0 top-full m-0 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 p-0 ${
           isOpen ? "block" : "hidden"
