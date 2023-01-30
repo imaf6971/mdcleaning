@@ -1,6 +1,6 @@
 import { trpc } from "@/utils/trpc";
 import { ChangeEvent, FormEvent, useState } from "react";
-import Modal from "../../ui/Modal";
+import Modal from "@/ui/Modal";
 import TimeInput from "@/ui/TimeInput";
 import SubmitInput from "@/ui/SubmitInput";
 import Select, { SelectOption } from "@/ui/Select";
