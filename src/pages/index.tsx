@@ -1,3 +1,4 @@
+import Navbar from "@/ui/Navbar";
 import RoomTable from "@/components/room/RoomTable";
 import SectionHeading from "@/ui/SectionHeading";
 import { serverSideTRPC } from "@/utils/ssg";
@@ -23,6 +24,7 @@ export default function Home() {
       <Head>
         <title>Комнаты</title>
       </Head>
+      <Navbar />
       <div className="container mx-auto">
         <SectionHeading heading="Комнаты" />
         {rooms.isSuccess && (
