@@ -95,36 +95,36 @@ export default function AddCleaningModal({
 
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      {cleaners.isLoading ? (
-        <Spinner />
-      ) : (
-        <form
-          onSubmit={handleAddCleaningSubmit}
-          className="flex flex-col gap-2 p-2"
-        >
-          <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
-          <div className="flex justify-between">
-            <TimeInput
-              label="C:"
-              id="fromCleaning"
-              value={from.toLocaleTimeString("ru-RU")}
-              onChange={handleFromTimeInputChange}
-            />
-            <TimeInput
-              label="По:"
-              id="toCleaning"
-              value={to.toLocaleTimeString("ru-RU")}
-              onChange={handleToTimeInputChange}
-            />
-          </div>
+      <form
+        onSubmit={handleAddCleaningSubmit}
+        className="flex flex-col gap-2 p-2"
+      >
+        <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
+        <div className="flex justify-between">
+          <TimeInput
+            label="C:"
+            id="fromCleaning"
+            value={from.toLocaleTimeString("ru-RU")}
+            onChange={handleFromTimeInputChange}
+          />
+          <TimeInput
+            label="По:"
+            id="toCleaning"
+            value={to.toLocaleTimeString("ru-RU")}
+            onChange={handleToTimeInputChange}
+          />
+        </div>
+        {cleaners.isSuccess ? (
           <Select
             selectedOption={selectedCleanerOption()}
             options={mapCleanersToSelectOptions()}
             onChange={handleCleanerChange}
           />
-          <SubmitInput value="Добавить" />
-        </form>
-      )}
+        ) : (
+          <Spinner />
+        )}
+        <SubmitInput value="Добавить" />
+      </form>
     </Modal>
   );
 }
