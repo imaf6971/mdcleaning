@@ -4,6 +4,7 @@ import Modal from "../../ui/Modal";
 import TimeInput from "@/ui/TimeInput";
 import SubmitInput from "@/ui/SubmitInput";
 import Select, { SelectOption } from "@/ui/Select";
+import Spinner from "@/ui/Spinner";
 
 type AddCleaningModalProps = {
   roomId: number;
@@ -94,32 +95,36 @@ export default function AddCleaningModal({
 
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <form
-        onSubmit={handleAddCleaningSubmit}
-        className="flex flex-col gap-2 p-2"
-      >
-        <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
-        <div className="flex justify-between">
-          <TimeInput
-            label="C:"
-            id="fromCleaning"
-            value={from.toLocaleTimeString("ru-RU")}
-            onChange={handleFromTimeInputChange}
+      {cleaners.isLoading ? (
+        <Spinner />
+      ) : (
+        <form
+          onSubmit={handleAddCleaningSubmit}
+          className="flex flex-col gap-2 p-2"
+        >
+          <h2 className="mb-2 text-lg font-medium">Назначить уборку</h2>
+          <div className="flex justify-between">
+            <TimeInput
+              label="C:"
+              id="fromCleaning"
+              value={from.toLocaleTimeString("ru-RU")}
+              onChange={handleFromTimeInputChange}
+            />
+            <TimeInput
+              label="По:"
+              id="toCleaning"
+              value={to.toLocaleTimeString("ru-RU")}
+              onChange={handleToTimeInputChange}
+            />
+          </div>
+          <Select
+            selectedOption={selectedCleanerOption()}
+            options={mapCleanersToSelectOptions()}
+            onChange={handleCleanerChange}
           />
-          <TimeInput
-            label="По:"
-            id="toCleaning"
-            value={to.toLocaleTimeString("ru-RU")}
-            onChange={handleToTimeInputChange}
-          />
-        </div>
-        <Select
-          selectedOption={selectedCleanerOption()}
-          options={mapCleanersToSelectOptions()}
-          onChange={handleCleanerChange}
-        />
-        <SubmitInput value="Добавить" />
-      </form>
+          <SubmitInput value="Добавить" />
+        </form>
+      )}
     </Modal>
   );
 }
