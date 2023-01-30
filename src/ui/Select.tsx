@@ -1,17 +1,21 @@
 import { useState } from "react";
 
-type SelectOption = {
+export type SelectOption = {
   label: string;
-  value: string | number;
+  value: number;
 };
 
 type SelectProps = {
   options: SelectOption[];
-  value?: SelectOption;
+  selectedOption?: SelectOption;
   onChange: (value?: SelectOption) => void;
 };
 
-export default function Select({ options, value, onChange }: SelectProps) {
+export default function Select({
+  options,
+  selectedOption,
+  onChange,
+}: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function clearOptions() {
@@ -23,7 +27,7 @@ export default function Select({ options, value, onChange }: SelectProps) {
   }
 
   function isOptionSelected(option: SelectOption): boolean {
-    return option.value === value?.value;
+    return option.value === selectedOption?.value;
   }
 
   return (
@@ -32,8 +36,9 @@ export default function Select({ options, value, onChange }: SelectProps) {
       onClick={() => setIsOpen((prev) => !prev)}
       className="relative flex min-h-[1.5em] w-80 items-center gap-2 rounded-md border p-2 transition-shadow hover:shadow focus:bg-gray-200 focus:outline-none focus:ring"
     >
-      <span className="grow">{value?.label}</span>
+      <span className="grow">{selectedOption?.label}</span>
       <button
+        type="button"
         onClick={(e) => {
           e.stopPropagation();
           clearOptions();
@@ -45,7 +50,7 @@ export default function Select({ options, value, onChange }: SelectProps) {
       <div className="w-[.05em] self-stretch bg-gray-200" />
       <div className="border-[.25em] border-solid border-transparent border-t-gray-200" />
       <ul
-        className={`absolute left-0 top-full m-0 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 p-0 ${
+        className={`absolute left-0 top-full m-0 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 bg-white p-0 ${
           isOpen ? "block" : "hidden"
         }`}
       >
