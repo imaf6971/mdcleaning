@@ -7,10 +7,7 @@ type ButtonProps = {
 
 export default function Button({ onClick, children }: ButtonProps) {
   return (
-    <button
-      onClick={onClick}
-      className="btn-like"
-    >
+    <button onClick={onClick} className="btn-like">
       {children}
     </button>
   );
