@@ -1,5 +1,7 @@
 import BasicTable from "@/components/BasicTable";
+import AddStaffModal from "@/components/staff/AddStaffModal";
 import ListItem from "@/ui/ListItem";
+import Navbar from "@/ui/Navbar";
 import SectionHeading from "@/ui/SectionHeading";
 import { serverSideTRPC } from "@/utils/ssg";
 import { trpc } from "@/utils/trpc";
@@ -25,6 +27,7 @@ export default function StaffIndex() {
       <Head>
         <title>Сотрудники</title>
       </Head>
+      <Navbar />
       <div className="container mx-auto">
         <SectionHeading heading="Сотрудники" />
         {staff.isSuccess && (
@@ -78,6 +81,7 @@ function StaffTable({ staff }: StaffTableProps) {
         onAddClick={handleAddClick}
         onChangeClick={handleChangeClick}
       />
+      {isAdding && <AddStaffModal onClose={() => setIsAdding(false)} />}
     </>
   );
 }
