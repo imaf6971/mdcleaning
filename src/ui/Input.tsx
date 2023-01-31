@@ -18,7 +18,7 @@ export default function Input({
   minLength,
 }: InputProps) {
   return (
-    <div className="flex items-center justify-between text-center">
+    <div className="flex flex-col items-start justify-between text-center">
       <label
         className="mb-2 block font-medium text-gray-900 dark:text-white"
         htmlFor={id}
@@ -29,7 +29,7 @@ export default function Input({
         required={required}
         minLength={minLength}
         id={id}
-        className="btn-like invalid:ring-red-300"
+        className="btn-like invalid:ring-red-300 w-full"
         type="text"
         value={value}
         onChange={onChange}
