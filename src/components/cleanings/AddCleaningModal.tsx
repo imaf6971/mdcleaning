@@ -114,6 +114,7 @@ export default function AddCleaningModal({
         </div>
         {cleaners.isSuccess && (
           <Select
+            label="Клинер"
             selectedOption={selectedCleanerOption()}
             options={mapCleanersToSelectOptions()}
             onChange={handleCleanerChange}
