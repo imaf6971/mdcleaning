@@ -14,6 +14,7 @@ model Room {
   id        Int        @id @default(autoincrement())
   title     String
   cleanings Cleaning[]
+  reviews   Review[]
 }
 
 model Cleaning {
@@ -32,4 +33,13 @@ model Staff {
   lastName   String
   patronymic String
   Cleaning   Cleaning[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  name      String
+  text      String
+  createdAt DateTime
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
 }

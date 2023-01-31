@@ -32,7 +32,7 @@ export const trpc = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
-      transformer: superjson
+      transformer: superjson,
       /**
        * @link https://tanstack.com/query/v4/docs/reference/QueryClient
        **/

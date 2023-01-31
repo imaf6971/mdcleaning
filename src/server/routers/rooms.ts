@@ -64,9 +64,25 @@ const rooms = router({
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.room.delete({
         where: {
-          id: input
-        }
+          id: input,
+        },
+      });
+    }),
+  addReview: procedure
+    .input(
+      z.object({
+        name: z.string(),
+        text: z.string(),
+        roomId: z.number().int(),
       })
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.review.create({
+        data: {
+          ...input,
+          createdAt: new Date(),
+        },
+      });
     }),
 });
 
