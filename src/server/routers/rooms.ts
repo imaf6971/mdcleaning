@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { procedure, router } from "../trpc";
 
@@ -11,25 +12,33 @@ const rooms = router({
     });
     return rooms;
   }),
-  byId: procedure
+  findById: procedure
     .input(z.number().int("Room id should be integer"))
     .query(async ({ input, ctx }) => {
-      const room = await ctx.prisma.room.findUniqueOrThrow({
-        where: {
-          id: input,
-        },
-        include: {
-          cleanings: {
-            include: {
-              cleaner: true,
-            },
-            orderBy: {
-              from: "asc",
-            },
+      try {
+        return await ctx.prisma.room.findUniqueOrThrow({
+          where: {
+            id: input,
           },
-        },
-      });
-      return room;
+          include: {
+            cleanings: {
+              include: {
+                cleaner: true,
+              },
+              orderBy: {
+                from: "asc",
+              },
+            },
+            reviews: true,
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          message: `Cannot find room by id ${input}`,
+          code: "NOT_FOUND",
+          cause: error,
+        });
+      }
     }),
   addCleaning: procedure
     .input(
