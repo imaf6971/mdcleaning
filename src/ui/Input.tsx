@@ -5,8 +5,8 @@ type InputProps = {
   label: string;
   id: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  required: boolean;
-  minLength: number;
+  required?: boolean;
+  minLength?: number;
 };
 
 export default function Input({
@@ -14,8 +14,8 @@ export default function Input({
   onChange,
   label,
   id,
-  required,
-  minLength,
+  required = false,
+  minLength = 0,
 }: InputProps) {
   return (
     <div className="flex flex-col items-start justify-between text-center">
