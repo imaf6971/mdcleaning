@@ -52,14 +52,21 @@ export default function CleaningTable({
     return cleanings.map((cleaning, idx) => (
       <div
         key={cleaning.id}
-        className="flex items-center justify-between p-3 transition-shadow hover:shadow"
+        className="flex w-full items-center justify-between rounded-md border p-3 transition-shadow hover:shadow"
       >
-        <div className="basis-1/6">{idx + 1}.</div>
+        <div className="">{idx + 1}.</div>
         <div className="">
-          {cleaning.from.toLocaleTimeString("ru-RU")} -{" "}
-          {cleaning.to.toLocaleTimeString("ru-RU")}
+          {cleaning.from.toLocaleTimeString("ru-RU", {
+            hour: "numeric",
+            minute: "numeric",
+          })}{" "}
+          -{" "}
+          {cleaning.to.toLocaleTimeString("ru-RU", {
+            hour: "numeric",
+            minute: "numeric",
+          })}
         </div>
-        <div className="basis-3/6">
+        <div className="">
           {cleaning.cleaner.firstName} {cleaning.cleaner.lastName.at(0)}.
         </div>
         {isEditing && (
