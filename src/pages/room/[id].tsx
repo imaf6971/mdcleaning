@@ -13,7 +13,13 @@ export async function getServerSideProps(
 ) {
   const ssTrpc = serverSideTRPC();
   const id = parseInt(context.params?.id as string);
-  const room = await ssTrpc.rooms.byId.prefetch(id);
+  try {
+    await ssTrpc.rooms.findById.fetch(id);
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       trpcState: ssTrpc.dehydrate(),
@@ -26,7 +32,7 @@ export default function Room(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const { id } = props;
-  const room = trpc.rooms.byId.useQuery(id);
+  const room = trpc.rooms.findById.useQuery(id);
 
   return (
     <>
@@ -40,9 +46,13 @@ export default function Room(
           <RoomHeading title={room.data!.title} />
         )}
         <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
-          <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
-          <h2 className="text-lg font-medium">QR-код</h2>
-          <RoomQR roomId={id} />
+          {room.isSuccess && (
+            <>
+              <CleaningTable roomId={id} cleanings={room.data!.cleanings} />
+              <h2 className="text-lg font-medium">QR-код</h2>
+              <RoomQR roomId={id} />
+            </>
+          )}
         </main>
       </div>
     </>
