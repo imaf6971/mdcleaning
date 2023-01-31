@@ -8,6 +8,9 @@ const rooms = router({
       select: {
         id: true,
         title: true,
+        _count: {
+          select: { reviews: true },
+        },
       },
     });
     return rooms;
