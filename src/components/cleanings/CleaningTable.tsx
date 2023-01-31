@@ -32,7 +32,7 @@ export default function CleaningTable({
   const utils = trpc.useContext();
   const deleteCleaning = trpc.cleanings.deleteById.useMutation({
     onSuccess: () => {
-      utils.rooms.byId.invalidate(roomId);
+      utils.rooms.findById.invalidate(roomId);
     },
   });
 

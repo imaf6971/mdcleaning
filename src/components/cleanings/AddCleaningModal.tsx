@@ -25,7 +25,7 @@ export default function AddCleaningModal({
   const utils = trpc.useContext();
   const addCleaning = trpc.rooms.addCleaning.useMutation({
     onSuccess: () => {
-      utils.rooms.byId.invalidate(roomId);
+      utils.rooms.findById.invalidate(roomId);
     },
   });
   const cleaners = trpc.staff.list.useQuery();
