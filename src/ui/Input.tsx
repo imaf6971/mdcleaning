@@ -5,9 +5,18 @@ type InputProps = {
   label: string;
   id: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  required: boolean;
+  minLength: number;
 };
 
-export default function Input({ value, onChange, label, id }: InputProps) {
+export default function Input({
+  value,
+  onChange,
+  label,
+  id,
+  required,
+  minLength,
+}: InputProps) {
   return (
     <div className="flex items-center justify-between text-center">
       <label
@@ -17,6 +26,8 @@ export default function Input({ value, onChange, label, id }: InputProps) {
         {label}
       </label>
       <input
+        required={required}
+        minLength={minLength}
         id={id}
         className="btn-like"
         type="text"

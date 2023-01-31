@@ -2,7 +2,7 @@ import Input from "@/ui/Input";
 import Modal from "@/ui/Modal";
 import SubmitInput from "@/ui/SubmitInput";
 import { trpc } from "@/utils/trpc";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 type AddRoomModalProps = {
   isVisible: boolean;
@@ -27,6 +27,10 @@ export default function AddRoomModal({
     onClose();
   }
 
+  function handleRoomTitleChange(e: ChangeEvent<HTMLInputElement>) {
+    setRoomTitle(e.target.value);
+  }
+
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
       <form onSubmit={handleAddRoomSubmit} className="flex flex-col gap-2 p-2">
@@ -36,7 +40,9 @@ export default function AddRoomModal({
             id="roomTitle"
             value={roomTitle}
             label="Название"
-            onChange={(e) => setRoomTitle(e.target.value)}
+            onChange={handleRoomTitleChange}
+            required={true}
+            minLength={3}
           />
         </div>
         <SubmitInput value="Добавить" />
