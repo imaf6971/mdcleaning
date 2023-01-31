@@ -1,12 +1,12 @@
 import SectionHeading from "@/ui/SectionHeading";
 import { trpc } from "@/utils/trpc";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { useQRCode } from "next-qrcode";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { serverSideTRPC } from "@/utils/ssg";
 import CleaningTable from "@/components/cleanings/CleaningTable";
 import Head from "next/head";
+import RoomQR from "@/components/room/RoomQR";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ id: string }>
@@ -28,8 +28,6 @@ export default function Room(
   const { id } = props;
   const room = trpc.rooms.byId.useQuery(id);
 
-  const { Image } = useQRCode();
-
   return (
     <>
       <Head>
@@ -44,17 +42,7 @@ export default function Room(
         <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
           <CleaningTable roomId={id} cleanings={room.data?.cleanings || []} />
           <h2 className="text-lg font-medium">QR-код</h2>
-          <Image
-            alt="qr"
-            text="abc"
-            options={{
-              type: "image/jpeg",
-              quality: 1,
-              level: "L",
-              margin: 3,
-              width: 200,
-            }}
-          />
+          <RoomQR roomId={id} />
         </main>
       </div>
     </>
