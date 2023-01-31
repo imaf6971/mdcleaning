@@ -59,8 +59,8 @@ export default function CleaningTable({
           {cleaning.from.toLocaleTimeString("ru-RU", {
             hour: "numeric",
             minute: "numeric",
-          })}{" "}
-          -{" "}
+          })}
+          -
           {cleaning.to.toLocaleTimeString("ru-RU", {
             hour: "numeric",
             minute: "numeric",
@@ -90,13 +90,14 @@ export default function CleaningTable({
         onChangeClick={handleOnChangeClick}
         heading="График уборки"
       />
-      <AddCleaningModal
-        roomId={roomId}
-        isVisible={showAddCleaningModal}
-        onClose={() => {
-          setShowAddCleaningModal(false);
-        }}
-      />
+      {showAddCleaningModal && (
+        <AddCleaningModal
+          roomId={roomId}
+          onClose={() => {
+            setShowAddCleaningModal(false);
+          }}
+        />
+      )}
     </>
   );
 }

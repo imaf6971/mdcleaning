@@ -5,14 +5,10 @@ import { trpc } from "@/utils/trpc";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 type AddRoomModalProps = {
-  isVisible: boolean;
   onClose: () => void;
 };
 
-export default function AddRoomModal({
-  isVisible,
-  onClose,
-}: AddRoomModalProps) {
+export default function AddRoomModal({ onClose }: AddRoomModalProps) {
   const utils = trpc.useContext();
   const addRooms = trpc.rooms.add.useMutation({
     onSuccess() {
@@ -32,7 +28,7 @@ export default function AddRoomModal({
   }
 
   return (
-    <Modal isVisible={isVisible} onClose={onClose}>
+    <Modal onClose={onClose}>
       <form onSubmit={handleAddRoomSubmit} className="flex flex-col gap-2 p-2">
         <h2 className="mb-2 text-lg font-medium">Добавить Комнату</h2>
         <div>

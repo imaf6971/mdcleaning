@@ -1,17 +1,12 @@
 import { ReactNode } from "react";
 
 export type ModalProps = {
-  isVisible: boolean;
   onClose: () => void;
   children: ReactNode;
 };
 
 // TODO: fix width on different screens
-export default function Modal({ isVisible, onClose, children }: ModalProps) {
-  if (!isVisible) {
-    return null;
-  }
-
+export default function Modal({ onClose, children }: ModalProps) {
   return (
     <div
       onClick={onClose}

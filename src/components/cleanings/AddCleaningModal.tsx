@@ -1,5 +1,5 @@
 import { trpc } from "@/utils/trpc";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Modal from "@/ui/Modal";
 import TimeInput from "@/ui/TimeInput";
 import SubmitInput from "@/ui/SubmitInput";
@@ -8,7 +8,6 @@ import Spinner from "@/ui/Spinner";
 
 type AddCleaningModalProps = {
   roomId: number;
-  isVisible: boolean;
   onClose: () => void;
 };
 
@@ -21,7 +20,6 @@ type Cleaner = {
 // TODO: add validation
 export default function AddCleaningModal({
   roomId,
-  isVisible,
   onClose,
 }: AddCleaningModalProps) {
   const utils = trpc.useContext();
@@ -94,7 +92,7 @@ export default function AddCleaningModal({
   }
 
   return (
-    <Modal isVisible={isVisible} onClose={onClose}>
+    <Modal onClose={onClose}>
       <form
         onSubmit={handleAddCleaningSubmit}
         className="flex flex-col gap-2 p-2"
@@ -114,15 +112,15 @@ export default function AddCleaningModal({
             onChange={handleToTimeInputChange}
           />
         </div>
-        {cleaners.isSuccess ? (
+        {cleaners.isSuccess && (
           <Select
             selectedOption={selectedCleanerOption()}
             options={mapCleanersToSelectOptions()}
             onChange={handleCleanerChange}
           />
-        ) : (
-          <Spinner />
         )}
+        {cleaners.isLoading && <Spinner />}
+        {cleaners.isError && <div>Error!</div>}
         <SubmitInput value="Добавить" />
       </form>
     </Modal>

@@ -57,8 +57,7 @@ export default function RoomTable({ rooms }: RoomTableProps) {
         onAddClick={handleAddRoomClick}
         onChangeClick={handleEditRoomClick}
       />
-      <AddRoomModal isVisible={isAdding} onClose={() => setIsAdding(false)} />
+      {isAdding && <AddRoomModal onClose={() => setIsAdding(false)} />}
     </>
   );
 }
-
