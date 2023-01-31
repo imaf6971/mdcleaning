@@ -29,7 +29,7 @@ export default function Input({
         required={required}
         minLength={minLength}
         id={id}
-        className="btn-like"
+        className="btn-like invalid:ring-red-300"
         type="text"
         value={value}
         onChange={onChange}
