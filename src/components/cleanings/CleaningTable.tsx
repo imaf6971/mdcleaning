@@ -12,8 +12,8 @@ type Staff = {
 
 type Cleaning = {
   id: number;
-  from: Date;
-  to: Date;
+  from: string;
+  to: string;
   cleaner: Staff;
 };
 
@@ -57,7 +57,7 @@ export default function CleaningTable({
         <div className="">{idx + 1}.</div>
         <div className="">{`${cleaning.from} - ${cleaning.to}`}</div>
         <div className="">
-          {cleaning.cleaner.firstName} {cleaning.cleaner.lastName.at(0)}.
+          {cleaning.cleaner.firstName} {cleaning.cleaner.lastName[0]}.
         </div>
         {isEditing && (
           <button
