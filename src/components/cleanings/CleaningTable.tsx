@@ -55,17 +55,7 @@ export default function CleaningTable({
         className="flex w-full items-center justify-between rounded-md border p-3 transition-shadow hover:shadow"
       >
         <div className="">{idx + 1}.</div>
-        <div className="">
-          {cleaning.from.toLocaleTimeString("ru-RU", {
-            hour: "numeric",
-            minute: "numeric",
-          })}
-          -
-          {cleaning.to.toLocaleTimeString("ru-RU", {
-            hour: "numeric",
-            minute: "numeric",
-          })}
-        </div>
+        <div className="">{`${cleaning.from} - ${cleaning.to}`}</div>
         <div className="">
           {cleaning.cleaner.firstName} {cleaning.cleaner.lastName.at(0)}.
         </div>
