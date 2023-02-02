@@ -11,20 +11,30 @@ datasource db {
 }
 
 model Room {
-  id        Int        @id @default(autoincrement())
-  title     String
-  cleanings Cleaning[]
-  reviews   Review[]
+  id              Int              @id @default(autoincrement())
+  title           String
+  cleanings       Cleaning[]
+  reviews         Review[]
+  actualCleanings ActualCleaning[]
 }
 
 model Cleaning {
-  id      Int      @id @default(autoincrement())
-  room    Room     @relation(fields: [roomId], references: [id])
+  id      Int    @id @default(autoincrement())
+  room    Room   @relation(fields: [roomId], references: [id])
   roomId  Int
-  from    DateTime // @db.Time for MySQL
-  to      DateTime // @db.Time for MySQL
-  cleaner Staff    @relation(fields: [staffId], references: [id])
+  from    String // @db.Time for MySQL
+  to      String // @db.Time for MySQL
+  cleaner Staff  @relation(fields: [staffId], references: [id])
   staffId Int
+}
+
+model ActualCleaning {
+  id         Int       @id @default(autoincrement())
+  room       Room      @relation(fields: [roomId], references: [id])
+  roomId     Int
+  startTime  DateTime
+  finishTime DateTime?
+  // TODO: Staff field
 }
 
 model Staff {
