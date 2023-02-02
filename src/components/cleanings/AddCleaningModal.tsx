@@ -29,28 +29,17 @@ export default function AddCleaningModal({
     },
   });
   const cleaners = trpc.staff.list.useQuery();
-  const [from, setFrom] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
-  const [to, setTo] = useState(new Date(1970, 0, 1, 12, 0, 0, 0));
+
+  const [from, setFrom] = useState("12:00");
+  const [to, setTo] = useState("12:00");
   const [cleanerId, setCleanerId] = useState<number | undefined>(undefined);
 
   function handleToTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setTo((prev) => {
-      try {
-        return e.target.valueAsDate!;
-      } catch (error) {
-        return prev;
-      }
-    });
+    setTo(() => e.target.value);
   }
 
   function handleFromTimeInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setFrom((prev) => {
-      try {
-        return e.target.valueAsDate!;
-      } catch (error) {
-        return prev;
-      }
-    });
+    setFrom(() => e.target.value);
   }
 
   function handleAddCleaningSubmit(e: FormEvent<HTMLFormElement>) {
@@ -102,13 +91,13 @@ export default function AddCleaningModal({
           <TimeInput
             label="C:"
             id="fromCleaning"
-            value={from.toLocaleTimeString("ru-RU")}
+            value={from}
             onChange={handleFromTimeInputChange}
           />
           <TimeInput
             label="По:"
             id="toCleaning"
-            value={to.toLocaleTimeString("ru-RU")}
+            value={to}
             onChange={handleToTimeInputChange}
           />
         </div>
