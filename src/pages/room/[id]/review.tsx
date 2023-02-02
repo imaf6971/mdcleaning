@@ -1,26 +1,29 @@
 import Input from "@/ui/Input";
-import Navbar from "@/ui/Navbar";
 import SectionHeading from "@/ui/SectionHeading";
 import Spinner from "@/ui/Spinner";
 import SubmitInput from "@/ui/SubmitInput";
 import TextArea from "@/ui/TextArea";
 import { trpc } from "@/utils/trpc";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef } from "react";
 
+// TODO: getServerSideProps an roomId: number
 export default function RoomReviewPage() {
   const addReview = trpc.rooms.addReview.useMutation();
   const router = useRouter();
   const { id } = router.query;
-  const [name, setName] = useState("");
-  const [text, setText] = useState("");
+  const roomId = parseInt(id as string);
+  const form = useRef<any>(null); // TODO: properly type it
 
   function handleReviewFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const roomId = parseInt(id as string);
-    addReview.mutate({ roomId, name, text });
+    const { reviewName, reviewText } = form.current!.elements;
+    addReview.mutate({
+      roomId,
+      name: reviewName.value,
+      text: reviewText.value,
+    });
   }
 
   return (
@@ -30,20 +33,21 @@ export default function RoomReviewPage() {
       </Head>
       <div className="container mx-auto">
         <SectionHeading heading="Оставить отзыв" />
-        <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
+        <main
+          className={`m-4 flex h-[80vh] ${
+            addReview.isLoading ? "items-center justify-center" : ""
+          } flex-col gap-2 md:mx-auto md:w-2/3`}
+        >
           {addReview.isSuccess && (
             <div>
               <div>Спасибо за отзыв!</div>
               <div>Страницу можно закрыть :)</div>
             </div>
           )}
-          {addReview.isLoading && (
-            <div className="flex h-screen justify-center">
-              <Spinner />
-            </div>
-          )}
+          {addReview.isLoading && <Spinner />}
           {addReview.isIdle && (
             <form
+              ref={form}
               className="flex flex-col gap-4"
               onSubmit={handleReviewFormSubmit}
             >
@@ -52,15 +56,15 @@ export default function RoomReviewPage() {
                 id="reviewName"
                 label="Ваше имя:"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                // value={name}
+                // onChange={(e) => setName(e.target.value)}
               />
               <TextArea
                 id="reviewText"
                 label="Оставьте отзыв о нашей работе:"
                 required
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+                // value={text}
+                // onChange={(e) => setText(e.target.value)}
               />
               <SubmitInput value="Отправить" />
             </form>
