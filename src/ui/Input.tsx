@@ -1,10 +1,10 @@
 import { ChangeEventHandler } from "react";
 
 type InputProps = {
-  value: string;
+  value?: string;
   label: string;
   id: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   minLength?: number;
 };
@@ -19,17 +19,15 @@ export default function Input({
 }: InputProps) {
   return (
     <div className="flex flex-col items-start justify-between text-center">
-      <label
-        className="mb-2 block font-medium text-gray-900 dark:text-white"
-        htmlFor={id}
-      >
+      <label className="mb-2 block font-medium text-gray-900" htmlFor={id}>
         {label}
       </label>
       <input
         required={required}
         minLength={minLength}
         id={id}
-        className="btn-like invalid:ring-red-300 w-full"
+        name={id}
+        className="btn-like w-full invalid:ring-red-300"
         type="text"
         value={value}
         onChange={onChange}
