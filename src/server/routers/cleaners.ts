@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { procedure, router } from "../trpc";
 
-const staff = router({
+const cleaners = router({
   list: procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.staff.findMany({
+    return await ctx.prisma.cleaner.findMany({
       select: {
         id: true,
         lastName: true,
@@ -20,10 +20,10 @@ const staff = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.staff.create({
-        data: input
-      })
+      return await ctx.prisma.cleaner.create({
+        data: input,
+      });
     }),
 });
 
-export default staff;
+export default cleaners;
