@@ -48,7 +48,10 @@ export default function Room(
         <main className="m-4 flex flex-col justify-center gap-2 md:mx-auto md:w-2/3">
           {room.isSuccess && (
             <>
-              <CleaningTable roomId={id} cleanings={room.data!.cleanings} />
+              <CleaningTable
+                roomId={id}
+                cleanings={room.data!.plannedCleanings}
+              />
               <h2 className="text-lg font-medium">QR-код</h2>
               <RoomQR roomId={id} />
             </>
