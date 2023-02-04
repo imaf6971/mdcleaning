@@ -23,12 +23,12 @@ export default function AddCleaningModal({
   onClose,
 }: AddCleaningModalProps) {
   const utils = trpc.useContext();
-  const addCleaning = trpc.rooms.addCleaning.useMutation({
+  const addCleaning = trpc.cleaningPlan.create.useMutation({
     onSuccess: () => {
       utils.rooms.findById.invalidate(roomId);
     },
   });
-  const cleaners = trpc.staff.list.useQuery();
+  const cleaners = trpc.cleaners.list.useQuery();
 
   const [from, setFrom] = useState("12:00");
   const [to, setTo] = useState("12:00");
