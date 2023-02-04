@@ -24,7 +24,7 @@ const rooms = router({
             id: input,
           },
           include: {
-            cleanings: {
+            plannedCleanings: {
               include: {
                 cleaner: true,
               },
@@ -42,26 +42,6 @@ const rooms = router({
           cause: error,
         });
       }
-    }),
-  addCleaning: procedure
-    .input(
-      z.object({
-        roomId: z.number().int(),
-        from: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/),
-        to: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/),
-        cleanerId: z.number().int(),
-      })
-    )
-    .mutation(async ({ input, ctx }) => {
-      const newCleaning = await ctx.prisma.cleaning.create({
-        data: {
-          from: input.from,
-          to: input.to,
-          roomId: input.roomId,
-          staffId: input.cleanerId,
-        },
-      });
-      return newCleaning;
     }),
   add: procedure
     .input(z.object({ title: z.string().min(1) }))
@@ -103,8 +83,8 @@ const rooms = router({
         data: {
           roomId: input,
           startTime: new Date(),
-        }
-      })
+        },
+      });
       return newCleaning;
     }),
 });
