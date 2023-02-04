@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export async function getServerSideProps() {
   const ssTrpc = serverSideTRPC();
-  await ssTrpc.staff.list.prefetch();
+  await ssTrpc.cleaners.list.prefetch();
   return {
     props: {
       trpcState: ssTrpc.dehydrate(),
@@ -20,7 +20,7 @@ export async function getServerSideProps() {
 }
 
 export default function StaffIndex() {
-  const staff = trpc.staff.list.useQuery();
+  const staff = trpc.cleaners.list.useQuery();
 
   return (
     <>
