@@ -30,7 +30,7 @@ export default function CleaningTable({
   const [showAddCleaningModal, setShowAddCleaningModal] = useState(false);
 
   const utils = trpc.useContext();
-  const deleteCleaning = trpc.cleanings.deleteById.useMutation({
+  const deleteCleaning = trpc.cleaningPlan.deleteById.useMutation({
     onSuccess: () => {
       utils.rooms.findById.invalidate(roomId);
     },
