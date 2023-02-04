@@ -10,9 +10,9 @@ type AddStaffModalProps = {
 
 export default function AddStaffModal({ onClose }: AddStaffModalProps) {
   const utils = trpc.useContext();
-  const addStaff = trpc.staff.add.useMutation({
+  const addStaff = trpc.cleaners.add.useMutation({
     onSuccess() {
-      utils.staff.invalidate();
+      utils.cleaners.invalidate();
     },
   });
   const [firstName, setFirstName] = useState("");
