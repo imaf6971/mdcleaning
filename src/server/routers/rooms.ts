@@ -33,6 +33,7 @@ const rooms = router({
               },
             },
             reviews: true,
+            actualCleanings: true,
           },
         });
       } catch (error) {
