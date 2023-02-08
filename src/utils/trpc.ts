@@ -1,7 +1,8 @@
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
-import { AppRouter } from "../server/routers/_app";
+import { appRouter, AppRouter } from "../server/routers/_app";
 import superjson from "superjson";
+import { createContext } from "@/server/context";
 
 function getBaseUrl() {
   if (typeof window !== "undefined")
@@ -44,3 +45,7 @@ export const trpc = createTRPCNext<AppRouter>({
    **/
   ssr: false,
 });
+
+export function createTRPCcaller() {
+  return appRouter.createCaller(createContext())
+}

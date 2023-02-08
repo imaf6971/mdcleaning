@@ -1,9 +1,8 @@
-import { appRouter } from "@/server/routers/_app";
 import { NextApiRequest, NextApiResponse } from "next";
-import { createContext } from "@/server/context";
 import { handleApiErrors, handleUnallowedMethod, isAllowedMethod } from "@/utils/api/req";
+import { createTRPCcaller as createTRPCCaller } from "@/utils/trpc";
 
-const ALLOWED_METHODS = ["GET"];
+const ALLOWED_METHODS = ["PATCH"];
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,10 +14,12 @@ export default async function handler(
   }
 
   const { id } = req.query;
-  const caller = appRouter.createCaller(createContext());
+  const cleaningId = parseInt(id as string);
+
+  const trpc = createTRPCCaller();
   try {
-    const room = await caller.rooms.findById(parseInt(id as string));
-    res.status(200).json({ data: { id: room.id, title: room.title } });
+    const finisedCleaning = await trpc.cleanings.finishCleaning(cleaningId);
+    res.status(200).json({ data: finisedCleaning });
     return;
   } catch (error) {
     handleApiErrors(error, res);

@@ -1,15 +1,20 @@
 import { createContext } from "@/server/context";
 import { appRouter } from "@/server/routers/_app";
-import { TRPCError } from "@trpc/server";
-import { getHTTPStatusCodeFromError } from "@trpc/server/http";
+import {
+  handleApiErrors,
+  handleUnallowedMethod,
+  isAllowedMethod,
+} from "@/utils/api/req";
 import { NextApiRequest, NextApiResponse } from "next";
+
+const ALLOWED_METHODS = ["POST"];
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    res.status(405).json({ error: { message: "This method is not allowed!" } });
+  if (!isAllowedMethod(req.method, ALLOWED_METHODS)) {
+    handleUnallowedMethod(res);
     return;
   }
   const { id } = req.query;
@@ -21,10 +26,7 @@ export default async function handler(
     res.status(201).json({ data: cleaning });
     return;
   } catch (error) {
-    if (error instanceof TRPCError) {
-      const httpStatusCode = getHTTPStatusCodeFromError(error);
-      res.status(httpStatusCode).json({ error: { message: error.message } });
-      return;
-    }
+    handleApiErrors(error, res);
+    return;
   }
 }
