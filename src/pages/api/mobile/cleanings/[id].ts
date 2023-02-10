@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { handleApiErrors, handleUnallowedMethod, isAllowedMethod } from "@/utils/api/req";
-import { createTRPCcaller as createTRPCCaller } from "@/utils/trpc";
+import {
+  handleApiErrors,
+  handleUnallowedMethod,
+  isAllowedMethod,
+} from "@/utils/api/req";
+import { createTRPCCaller } from "@/utils/ssg";
 
 const ALLOWED_METHODS = ["PATCH"];
 
@@ -13,8 +17,7 @@ export default async function handler(
     return;
   }
 
-  const { id } = req.query;
-  const cleaningId = parseInt(id as string);
+  const cleaningId = parseInt(req.query.id as string);
 
   const trpc = createTRPCCaller();
   try {
