@@ -46,6 +46,3 @@ export const trpc = createTRPCNext<AppRouter>({
   ssr: false,
 });
 
-export function createTRPCcaller() {
-  return appRouter.createCaller(createContext())
-}

@@ -9,3 +9,7 @@ export const serverSideTRPC = () =>
     ctx: createContext(),
     transformer: superjson,
   });
+
+export function createTRPCCaller() {
+  return appRouter.createCaller(createContext());
+}
